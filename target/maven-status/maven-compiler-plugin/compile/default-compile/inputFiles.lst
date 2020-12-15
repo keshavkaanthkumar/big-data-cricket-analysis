@@ -15,6 +15,7 @@
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/averageRunsScoredByEachPlayer/PlayerMapper.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/minMaxMeanByGround/GroundReducer.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/playersAteachGround/PlayerMapper.java
+/home/keshav/gitworkspace/Cricket-Analysis/src/main/java/playersAteachGround/PlayerCountMapper.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/topInningsByRunsAndBalls/KeyPartitioner.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/averageRunsScoredByEachPlayer/CountAverageTuple.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/totalInningsByEachPlayer/PlayerMapper.java
@@ -30,3 +31,4 @@
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/topInningsByRunsAndBalls/Driver.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/noOfCenturiesByGround/Driver.java
 /home/keshav/gitworkspace/Cricket-Analysis/src/main/java/topInningsByRunsAndBalls/SortComparator.java
+/home/keshav/gitworkspace/Cricket-Analysis/src/main/java/playersAteachGround/PlayerCountReducer.java

@@ -18,31 +18,52 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 public class Driver {
 public static void main(String args[]) {
 	Configuration config = new Configuration();
-	try {
-		Job job = Job.getInstance(config,"Inverted index");
-		job.setJarByClass(Driver.class);
-		
-		//set mapper and reducer class
-		job.setMapperClass(PlayerMapper.class);
-		job.setReducerClass(PlayerReducer.class);
-		
-		//set inputformat and output format
-		job.setInputFormatClass(TextInputFormat.class);
-		job.setOutputFormatClass(TextOutputFormat.class);
-		
-		//set the output key and value class
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
-		
-		//set the input and output paths
-		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		Path outDir = new Path(args[1]);
-		 FileSystem fs = FileSystem.get(job.getConfiguration());
-	        if(fs.exists(outDir)){
-	            fs.delete(outDir, true);
+
+		try {
+			Job job = Job.getInstance(config,"Map reduce Chaining");
+			job.setJarByClass(Driver.class);
+			
+			//set mapper and reducer class
+			job.setMapperClass(PlayerCountMapper.class);
+			job.setReducerClass(PlayerCountReducer.class);
+			
+			//set inputformat and output format
+			job.setInputFormatClass(TextInputFormat.class);
+			job.setOutputFormatClass(TextOutputFormat.class);
+			
+			//set the output key and value class
+			job.setOutputKeyClass(Text.class);
+			job.setOutputValueClass(IntWritable.class);
+			
+			//set the input and output paths
+			FileInputFormat.addInputPath(job, new Path(args[0]));
+			FileOutputFormat.setOutputPath(job, new Path(args[1]));
+			Path outDir = new Path(args[1]);
+			 FileSystem fs = FileSystem.get(job.getConfiguration());
+		        if(fs.exists(outDir)){
+		            fs.delete(outDir, true);
+		        }
+			boolean result=job.waitForCompletion(true);
+	        if(result)
+	        {
+	            Job job1 = Job.getInstance();
+	            job1.setJarByClass(Driver.class);
+	            job1.setMapperClass(PlayerMapper.class);
+	            job1.setReducerClass(PlayerReducer.class);
+		        job1.setMapOutputKeyClass(Text.class);
+		        job1.setMapOutputValueClass(IntWritable.class);
+
+		        job1.setOutputKeyClass(Text.class);
+		        job1.setOutputValueClass(IntWritable.class);
+	            TextInputFormat.addInputPath(job1, new Path(args[1]));
+	            TextOutputFormat.setOutputPath(job1, new Path(args[2]));
+	            Path outDir2 = new Path(args[2]);
+	   		 FileSystem fs2 = FileSystem.get(job1.getConfiguration());
+	   	        if(fs2.exists(outDir2)){
+	   	            fs2.delete(outDir2, true);
+	   	        }
+	            job1.waitForCompletion(true);
 	        }
-		System.exit(job.waitForCompletion(true)?0:1);
 		
 		
 	} catch (IOException e) {
